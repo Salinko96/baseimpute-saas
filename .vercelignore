@@ -1,0 +1,7 @@
+node_modules
+node_modules_bak
+node_modules_bak_*
+.next
+.env
+.env.local
+deploy.tar.gz
