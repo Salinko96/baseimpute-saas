@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 interface FolderLine {
   id: string;
@@ -16,6 +16,7 @@ interface FolderLine {
 
 export default function FolderDetailPage() {
   const { id } = useParams();
+  const router = useRouter();
   const [lines, setLines] = useState<FolderLine[]>([]);
   const [loading, setLoading] = useState(true);
   const [extracting, setExtracting] = useState(false);
@@ -225,6 +226,7 @@ export default function FolderDetailPage() {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 }
