@@ -11,7 +11,7 @@ interface ImportFolder {
 }
 
 export default function FoldersPage() {
-  const { clientId } = useParams(); // Assuming we are in /clients/[clientId]/folders
+  const { id: clientId } = useParams();
   const router = useRouter();
   const [folders, setFolders] = useState<ImportFolder[]>([]);
   const [loading, setLoading] = useState(true);
