@@ -18,20 +18,27 @@ export default function SignupPage() {
     setLoading(true);
     setError('');
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { full_name: name },
-      },
-    });
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: name } },
+      });
 
-    if (error) {
-      setError(error.message);
+      if (error) {
+        setError(error.message);
+      } else {
+        alert('Vérifiez votre boîte mail pour confirmer l\'inscription !');
+        router.push('/login');
+      }
+    } catch (err) {
+      setError(
+        err instanceof TypeError && err.message === 'Failed to fetch'
+          ? 'Connexion à Supabase impossible. Vérifiez la configuration du projet.'
+          : 'Une erreur réseau est survenue. Réessayez dans quelques instants.'
+      );
+    } finally {
       setLoading(false);
-    } else {
-      alert('Vérifiez votre boîte mail pour confirmer l\'inscription !');
-      router.push('/login');
     }
   }
 
