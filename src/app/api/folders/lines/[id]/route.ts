@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -25,8 +25,10 @@ export async function PATCH(
         action: 'UPDATE_LINE',
         entityId: id,
         entityType: 'FolderLine',
-        oldValue: oldLine,
-        newValue: updatedLine,
+        oldValue: oldLine
+          ? (JSON.parse(JSON.stringify(oldLine)) as Prisma.InputJsonValue)
+          : Prisma.JsonNull,
+        newValue: JSON.parse(JSON.stringify(updatedLine)) as Prisma.InputJsonValue,
       },
     });
 
