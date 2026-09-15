@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { matchSHCode } from './matching.service';
 
 const prisma = new PrismaClient();
@@ -61,7 +61,9 @@ export async function calculateLineTaxes(clientId: string, lineId: string) {
       action: 'CALCULATE_TAXES',
       entityId: lineId,
       entityType: 'FolderLine',
-      oldValue: oldLine,
+      oldValue: oldLine
+        ? (JSON.parse(JSON.stringify(oldLine)) as Prisma.InputJsonValue)
+        : Prisma.JsonNull,
       newValue: { dutyAmount, statAmount, otherTaxes: otherAmount, totalAmount: finalTotal },
     },
   });
